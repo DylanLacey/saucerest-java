@@ -32,11 +32,6 @@ jobs:
           gpg-passphrase: GPG_PASSPHRASE
           server-id: ossrh
       
-      - name: Install Maven
-        uses: aahmed-se/setup-maven@v3
-        with:
-          maven-version: 3.6.1
-      
       - uses: actions/checkout@v2
 
       - name: Build & Test
