@@ -11,7 +11,7 @@ on:
         default: 'PATCH'
       dry_run:
         description: Whether to perform a dry run instead of a full release.
-        default: false
+        default: true
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -29,6 +29,7 @@ jobs:
         with:
           java-version: 1.8
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: GPG_PASSPHRASE
       
       - name: Install Maven
         uses: aahmed-se/setup-maven@v3
@@ -42,7 +43,7 @@ jobs:
         
       - name: Prepare Release
         env:
-          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
         run: mvn -B release:clean release:prepare -DRELEASE_TYPE=$INPUT_RELEASETYPE -DdryRun=$INPUT_DRY_RUN
       
       - name: Perform Release
